@@ -180,6 +180,109 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Demo autoplay logic (videos play sequentially on hero CTA click)
+    const demoBtn = document.getElementById('btnDemo');
+    const caseVideos = document.querySelectorAll('#cases video');
+    let demoPlaying = false;
+    let demoIndex = -1;
+
+    function resetDemo() {
+        caseVideos.forEach(v => {
+            try { v.pause(); } catch (_) {}
+            v.currentTime = 0;
+            v.controls = true;
+        });
+        demoPlaying = false;
+        demoIndex = -1;
+        if (demoBtn) {
+            const span = demoBtn.querySelector('span');
+            const icon = demoBtn.querySelector('i');
+            if (span) span.textContent = 'Ver Demonstrações';
+            if (icon) icon.className = 'fas fa-play';
+        }
+    }
+
+    function playNextInDemo() {
+        // Stop if nothing to play
+        if (!demoPlaying || caseVideos.length === 0) {
+            resetDemo();
+            return;
+        }
+
+        // Advance index
+        demoIndex += 1;
+        if (demoIndex >= caseVideos.length) {
+            resetDemo();
+            return;
+        }
+
+        // Prepare current video
+        const vid = caseVideos[demoIndex];
+        const card = vid.closest('.case-card');
+
+        // Scroll into view smoothly
+        if (card && typeof card.scrollIntoView === 'function') {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Ensure autoplay compliance (keep controls visible)
+        vid.muted = true;
+        vid.controls = true;
+        vid.currentTime = 0;
+
+        // When the video ends, play the next one
+        const onEnded = () => {
+            vid.removeEventListener('ended', onEnded);
+            playNextInDemo();
+        };
+        vid.addEventListener('ended', onEnded);
+
+        // Attempt playback after a short delay for scroll
+        setTimeout(() => {
+            const p = vid.play();
+            if (p && typeof p.then === 'function') {
+                p.then(() => {}).catch(() => {
+                    // If autoplay still fails, show controls and move on after 3s
+                    vid.controls = true;
+                    setTimeout(() => playNextInDemo(), 3000);
+                });
+            }
+        }, 600);
+    }
+
+    if (demoBtn && caseVideos.length > 0) {
+        demoBtn.addEventListener('click', () => {
+            if (demoPlaying) {
+                resetDemo();
+                return;
+            }
+
+            // Start demo
+            const casesSection = document.getElementById('cases');
+            if (casesSection) {
+                casesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            caseVideos.forEach(v => {
+                v.muted = true;
+                v.controls = true; // keep controls visible during demo
+                try { v.pause(); } catch (_) {}
+                v.currentTime = 0;
+            });
+
+            demoPlaying = true;
+            demoIndex = -1;
+
+            const span = demoBtn.querySelector('span');
+            const icon = demoBtn.querySelector('i');
+            if (span) span.textContent = 'Parar Demonstração';
+            if (icon) icon.className = 'fas fa-stop';
+
+            // Kick off sequence
+            setTimeout(() => playNextInDemo(), 900);
+        });
+    }
+
     // Form submission
     const contactForm = document.querySelector('.contact-form form');
     if (contactForm) {

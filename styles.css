@@ -264,12 +264,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     box-shadow: var(--shadow-light);
     backdrop-filter: blur(20px);
     animation: float 6s ease-in-out infinite;
     width: 140px;
+    height: 120px;
     min-width: 140px;
+    min-height: 120px;
 }
 
 .floating-card i {
@@ -327,7 +330,7 @@ body {
 
 .hero-scroll {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -446,12 +449,15 @@ body {
 }
 
 .case-card {
-    width: 350px;
+    width: 100%;
+    max-width: 100%;
     background: var(--dark-bg);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    overflow: hidden;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-light);
     transition: all 0.3s ease;
+    margin: 0 auto;
 }
 
 .case-card:hover {
@@ -1254,6 +1260,7 @@ body {
     }
     
     .hero-subtitle {
+        margin: 1rem;
         font-size: 1.1rem;
         margin-bottom: 2rem;
     }
@@ -1313,6 +1320,17 @@ body {
     .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+    
+    /* Center About texts on mobile */
+    .about-text,
+    .about-text .section-title {
+        text-align: center;
+    }
+    .about-description {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .about-stats {
