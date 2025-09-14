@@ -2,7 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Captura os dados do formulário e faz um sanitize básico
     $nome = htmlspecialchars(trim($_POST["nome"]));
-    $email = filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL);
+    $email  = filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL);
     $whatsapp = htmlspecialchars(trim($_POST["whatsapp"]));
     $assunto = htmlspecialchars(trim($_POST["assunto"]));
     $mensagem = htmlspecialchars(trim($_POST["mensagem"]));
