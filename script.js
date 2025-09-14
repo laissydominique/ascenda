@@ -246,7 +246,74 @@ document.addEventListener('DOMContentLoaded', function() {
         element.style.transform = direction === 'left' ? 'translateX(-50px)' : 'translateX(50px)';
         element.style.opacity = '0';
     });
+
+    // Carousel functionality
+    initCarousel();
 });
+
+// Carousel functionality
+function initCarousel() {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.indicator');
+    let currentSlide = 0;
+    let carouselInterval;
+
+    if (slides.length === 0) return;
+
+    function showSlide(index) {
+        // Remove active class from all slides and indicators
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'prev');
+        });
+        indicators.forEach(indicator => {
+            indicator.classList.remove('active');
+        });
+
+        // Add active class to current slide and indicator
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+
+        // Add prev class to previous slide for smooth transition
+        const prevIndex = currentSlide;
+        if (prevIndex !== index) {
+            slides[prevIndex].classList.add('prev');
+        }
+
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % slides.length;
+        showSlide(nextIndex);
+    }
+
+    function startCarousel() {
+        carouselInterval = setInterval(nextSlide, 2500); // Change slide every 2.5 seconds
+    }
+
+    function stopCarousel() {
+        clearInterval(carouselInterval);
+    }
+
+    // Add click event listeners to indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            showSlide(index);
+            stopCarousel();
+            startCarousel(); // Restart the interval
+        });
+    });
+
+    // Pause carousel on hover
+    const carouselContainer = document.querySelector('.carousel-container');
+    if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopCarousel);
+        carouselContainer.addEventListener('mouseleave', startCarousel);
+    }
+
+    // Start the carousel
+    startCarousel();
+}
 
 // Counter animation function
 function animateCounter(element) {
