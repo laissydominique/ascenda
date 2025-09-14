@@ -391,6 +391,7 @@ function initCarousel() {
     }
 
     function startCarousel() {
+        if (carouselInterval) clearInterval(carouselInterval);
         carouselInterval = setInterval(nextSlide, 2500); // Change slide every 2.5 seconds
     }
 
@@ -416,6 +417,15 @@ function initCarousel() {
 
     // Start the carousel
     startCarousel();
+
+    // Auto-resume when tab/window becomes visible again
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            startCarousel();
+        } else {
+            stopCarousel();
+        }
+    });
 }
 
 // Counter animation function
