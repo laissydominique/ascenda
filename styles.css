@@ -1256,7 +1256,7 @@ body {
     
     .hero-title {
         font-size: 2.5rem;
-        line-height: 1.2;
+        line-height: 1.25; /* increase line-height to avoid clipping descenders */
     }
     
     .hero-subtitle {
@@ -1442,7 +1442,11 @@ body {
     
     .hero-title {
         font-size: 2rem;
-        line-height: 1.1;
+        line-height: 1.25; /* prevent clipping of letters like g/j/y */
+    }
+    /* add subtle bottom padding to ensure enough visual space for descenders */
+    .hero-title-line:last-child {
+        padding-bottom: 0.05em;
     }
     
     .hero-subtitle {
