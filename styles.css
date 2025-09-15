@@ -943,6 +943,22 @@ body {
     padding: 2rem;
 }
 
+/* Ensure the submit button in the contact form is centered and properly aligned */
+.contact-form button[type="submit"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* center horizontally */
+    width: 100%;
+    max-width: 320px;
+}
+
+/* Fine-tune icon and text vertical alignment inside buttons */
+.btn-primary i,
+.btn-secondary i {
+    line-height: 1;
+}
+
 .form-group {
     margin-bottom: 1.75rem;
 }
@@ -1381,6 +1397,12 @@ body {
     .contact-form {
         padding: 2rem 1.5rem;
     }
+
+    /* On mobile, ensure the submit button spans full width but remains centered visually */
+    .contact-form button[type="submit"] {
+        max-width: 340px;
+        width: 100%;
+    }
     
     .form-group {
         margin-bottom: 2rem;
@@ -1456,6 +1478,11 @@ body {
     
     .hero-cta {
         gap: 0.75rem;
+    }
+
+    /* Tighten button width on very small screens to avoid edge clipping */
+    .contact-form button[type="submit"] {
+        max-width: 300px;
     }
     
     .btn-primary,
