@@ -666,7 +666,7 @@ body {
 }
 
 .faq-answer p {
-    padding: 0 2rem 1.5rem;
+    padding: 1.5rem;
     color: var(--text-secondary);
     line-height: 1.6;
     margin: 0;

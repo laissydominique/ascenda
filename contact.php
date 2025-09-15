@@ -1,5 +1,8 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Ensure JSON responses
+    header('Content-Type: application/json; charset=UTF-8');
+
     // Captura os dados do formulário e faz um sanitize básico
     $nome = htmlspecialchars(trim($_POST["nome"]));
     $email  = filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL);
@@ -33,8 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cabecalho .= "Content-Type: text/plain; charset=UTF-8\r\n";
     $cabecalho .= "X-Mailer: PHP/" . phpversion();
 
-    // Tentativa de envio
-    if (mail($para, $assunto_email, $corpo, $cabecalho)) {
+    // Tentativa de envio real
+    $mailResult = @mail($para, $assunto_email, $corpo, $cabecalho);
+    if ($mailResult) {
         echo json_encode(["success" => true, "message" => "Mensagem enviada com sucesso! Entraremos em contato em breve."]);
     } else {
         http_response_code(500);
@@ -42,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     http_response_code(405);
+    header('Content-Type: application/json; charset=UTF-8');
     echo json_encode(["success" => false, "message" => "Método não permitido."]);
 }
 ?>

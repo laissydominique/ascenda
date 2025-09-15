@@ -283,33 +283,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Form submission
-    const contactForm = document.querySelector('.contact-form form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.querySelector('.btn-primary');
-            const originalText = submitBtn.innerHTML;
-            
-            // Loading state
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Enviando...</span>';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> <span>Enviado!</span>';
-                submitBtn.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.style.background = '';
-                    this.reset();
-                }, 2000);
-            }, 1500);
-        });
-    }
 
     // Scroll progress indicator
     const scrollProgress = document.createElement('div');
